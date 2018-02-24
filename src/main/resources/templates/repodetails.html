@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head th:include="_links :: links">
+
+    <meta charset="UTF-8">
+    <title>ZMT Manager</title>
+
+</head>
+<body>
+
+    <nav id="nav" th:include="_navigation :: navigation-menu" />
+
+    <div class="container text-center">
+        <h3>Szczegóły</h3>
+        <form class = "form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-3">Index</label>
+                <div class="col-md-4">
+                    <label class="control-label" th:text="${repo.indexRepo}"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">Nazwa</label>
+                <div class="col-md-4">
+                    <label class="control-label" th:text="${repo.name}"></label>
+                </div>
+            </div>
+        </form>
+        <form class = "form-horizontal" th:method="PUT" th:action="@{/repo/} + ${repo.indexRepo}">
+            <div class="form-group">
+                <label class="control-label col-md-3">Opis</label>
+                <div class="col-md-4">
+                    <input type="text" name="description" required="required" th:value="${repo.description}"/>
+                    <input type="submit" class="bt btn btn-primary" name="add" value="Zapisz"/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

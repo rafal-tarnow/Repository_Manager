@@ -26,4 +26,15 @@ public class RepoService {
         repo.setLocation("/srv/repos/git/" + repo.getIndexRepo());
         repoRepository.save(repo);
     }
+
+    public Repo findByIndex(String index){
+        return repoRepository.findByIndexRepo(index);
+    }
+
+    public void updateRepo(String index, String description){
+        Repo repo = repoRepository.findByIndexRepo(index);
+        repo.setDescription(description);
+        repoRepository.save(repo);
+        System.out.println("descAfter: " +repo.getDescription());
+    }
 }

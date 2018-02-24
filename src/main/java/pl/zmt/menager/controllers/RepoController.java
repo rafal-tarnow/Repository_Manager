@@ -2,9 +2,7 @@ package pl.zmt.menager.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.zmt.menager.services.RepoService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,5 +30,20 @@ public class RepoController {
         repoService.save(index,name,description);
         return "redirect:/repo/all";
     }
+
+    @RequestMapping(value = "/{index}", method = RequestMethod.GET)
+    public String repoDetailsIndex(@PathVariable String index, HttpServletRequest request) {
+        request.setAttribute("repo", repoService.findByIndex(index));
+        return "repodetails";
+    }
+
+    @RequestMapping(value = "/{index}", method = RequestMethod.PUT)
+    public String updateRepo(@PathVariable String index, @RequestParam("description") String description, HttpServletRequest request){
+        repoService.updateRepo(index,description);
+        request.setAttribute("repo", repoService.findByIndex(index));
+        return "redirect:/repo/{index}";
+    }
+
+
 
 }

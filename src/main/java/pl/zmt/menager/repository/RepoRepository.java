@@ -5,4 +5,5 @@ import pl.zmt.menager.entity.Repo;
 
 public interface RepoRepository extends JpaRepository<Repo,Integer>{
 
+    Repo findByIndexRepo(String index);
 }
