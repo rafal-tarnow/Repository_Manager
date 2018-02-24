@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head th:include="_links :: links">
+
+    <meta charset="UTF-8">
+    <title>ZMT Manager</title>
+
+</head>
+<body>
+
+    <nav id="nav" th:include="_navigation :: navigation-menu" />
+
+    <div class="container text-center" id = "taskDiv">
+        <h3>List of Repository</h3>
+
+        <div class="table-responsive">
+            <table  class="table table-hover table-striped table-bordered text-center">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Index</th>
+                    <th>Nazwa</th>
+                    <th>Opis</th>
+                    <th>Lokalizacja</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="repo: ${repos}">
+                    <td th:text="${repo.id}"></td>
+                    <td th:text="${repo.indexRepo}"></td>
+                    <td th:text="${repo.name}"></td>
+                    <td th:text="${repo.description}"></td>
+                    <td th:text="${repo.location}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

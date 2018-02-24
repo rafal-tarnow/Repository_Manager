@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head th:include="_links :: links">
+
+    <meta charset="UTF-8">
+    <title>ZMT Manager</title>
+
+</head>
+<body>
+
+    <nav id="nav" th:include="_navigation :: navigation-menu" />
+
+    <div class="container text-center">
+        <h3>Nowe Repozytorium</h3>
+        <form class = "form-horizontal" method="POST">
+            <div class="form-group">
+                <label class="control-label col-md-3">Index</label>
+                <div class="col-md-4">
+                    <input type="text" name="index" required="required"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3">Nazwa</label>
+                <div class="col-md-4">
+                    <input type="text" name="name" required="required"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3">Opis</label>
+                <div class="col-md-4">
+                    <input type="text" name="description" required="required"/>
+                </div>
+            </div>
+
+            <div class="form group">
+                <input type="submit" class="bt btn btn-primary" name="add" value="Dodaj"/>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
