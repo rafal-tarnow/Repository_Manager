@@ -35,6 +35,7 @@ public class RepoController {
     @RequestMapping(value = "/{index}", method = RequestMethod.GET)
     public String repoDetailsIndex(@PathVariable String index, HttpServletRequest request) {
         request.setAttribute("repo", repoService.findByIndex(index));
+        request.setAttribute("node",repoService.returnTreeNode(index));
         return "repodetails";
     }
 

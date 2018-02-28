@@ -2,12 +2,22 @@ package pl.zmt.menager.services;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.AnyObjectId;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.zmt.menager.Node;
 import pl.zmt.menager.entity.Repo;
 import pl.zmt.menager.repository.RepoRepository;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -47,20 +57,18 @@ public class RepoService {
         String index = repoRepository.findFirstByOrderByIdDesc().getIndexRepo();
 
         int numIndex = Integer.parseInt(index.substring(3));
-        System.out.println(numIndex + "@2");
         numIndex += 1;
 
         index = "REP" + numIndex;
-        int roznica = 9 - index.length();
-        if(roznica > 0) {
-            String zera = "";
-            for (int i = 0; i < roznica; i++) {
-                zera += "0";
+        int missing = 9 - index.length();
+        if(missing > 0) {
+            String nulls = "";
+            for (int i = 0; i < missing; i++) {
+                nulls += "0";
             }
-            index = "REP" + zera + numIndex;
+            index = "REP" + nulls + numIndex;
         }
 
-        System.out.println(index + "@3");
         return index;
     }
 
@@ -86,5 +94,49 @@ public class RepoService {
                 System.out.println("Failed to create directory!");
             }
         }
+    }
+
+    public Node returnTreeNode(String index){
+        String path = "/srv/repos/git/" + index;
+
+        FileRepositoryBuilder builder = new FileRepositoryBuilder();
+        Node rootNode = new Node(index);
+
+        try {
+            Repository repo = builder.setGitDir(new File(path)).setMustExist(true).build();
+            Ref head = repo.getRef("HEAD");
+            RevWalk walk = new RevWalk(repo);
+
+            AnyObjectId anyObjectId = head.getObjectId();
+            if(anyObjectId == null)
+                return rootNode;
+            RevCommit commit = walk.parseCommit(anyObjectId);
+            RevTree tree = commit.getTree();
+            System.out.println("Having tree: " + tree);
+            TreeWalk treeWalk;
+            treeWalk = new TreeWalk(repo);
+            treeWalk.addTree(tree);
+            treeWalk.setRecursive(false);
+
+            Node parent = rootNode;
+            rootNode.setDepth(-1);
+
+            while(treeWalk.next()){
+
+                while (treeWalk.getDepth() <= parent.getDepth())
+                    parent = parent.getParent();
+
+                Node child = parent.addChild(new Node(treeWalk.getPathString()));
+                child.setDepth(treeWalk.getDepth());
+                if(treeWalk.isSubtree()) {
+                    treeWalk.enterSubtree();
+                    parent = child;
+                }
+            }
+
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return rootNode;
     }
 }
