@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static pl.zmt.menager.NodeType.*;
+
 @Service
 public class RepoService {
 
@@ -120,18 +122,23 @@ public class RepoService {
 
             Node parent = rootNode;
             rootNode.setDepth(-1);
+            rootNode.setType(DIRECTORY);
 
             while(treeWalk.next()){
 
                 while (treeWalk.getDepth() <= parent.getDepth())
                     parent = parent.getParent();
 
-                Node child = parent.addChild(new Node(treeWalk.getPathString()));
+                Node child = parent.addChild(new Node(treeWalk.getNameString()));
                 child.setDepth(treeWalk.getDepth());
                 if(treeWalk.isSubtree()) {
+                    child.setType(DIRECTORY);
                     treeWalk.enterSubtree();
                     parent = child;
+                }else {
+                    child.setType(FILE);
                 }
+
             }
 
         }catch (IOException e) {

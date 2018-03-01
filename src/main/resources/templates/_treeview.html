@@ -1,5 +1,16 @@
-<ul th:fragment="treeview (node,repo)" th:unless="${#lists.isEmpty(node.getChildren())}">
-    <li th:each="child : ${node.getChildren()}" th:inline="text" href="">[[${child.name}]]
+<ul th:fragment="treeview (node,repo)" th:unless="${#lists.isEmpty(node.getChildren())}"
+    xmlns:th="http://www.w3.org/1999/xhtml">
+    <li th:each="child : ${node.getChildren()}" th:inline="text" href="">
+        <th:block th:switch="${child.getType().toString()}">
+            <span th:case="'DIRECTORY'">
+                <img th:src="@{/images/Folder-icon.png}" />
+                [[${child.getName()}]]
+            </span>
+            <span th:case="'FILE'">
+               <img th:src="@{/images/File-icon.png}" />
+               <span class="file">[[${child.getName()}]]<span>
+            </span>
+        </th:block>
         <div th:replace="_treeview :: treeview(${child},${repo})"></div>
     </li>
 </ul>

@@ -40,7 +40,7 @@
                 <label class="control-label text-left col-md-3">Pliki:</label>
                 <div class="col-md-4 text-left" >
                     <label th:if="${#lists.isEmpty(node.children)}" class="control-label text-right">Brak plików w repozytorium</label>
-                    <div th:unless="${#lists.isEmpty(node.children)}" style="margin-top: 50px;">
+                    <div id="tree" th:unless="${#lists.isEmpty(node.getChildren())}" >
                         <input type="text" class="form-control" placeholder="Wyszukaj .." id="search"/>
                         <div id="jstree">
                             <ul th:replace="_treeview :: treeview(${node}, ${repo})"></ul>

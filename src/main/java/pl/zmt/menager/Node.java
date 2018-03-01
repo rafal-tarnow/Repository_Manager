@@ -10,6 +10,7 @@ public class Node {
     private List<Node> children = new ArrayList<>();
     private Node parent = null;
     private Integer depth = null;
+    private NodeType type;
 
     public Node(String name) {
         this.name = name;
@@ -53,4 +54,11 @@ public class Node {
         return parent;
     }
 
+    public NodeType getType() {
+        return type;
+    }
+
+    public void setType(NodeType type) {
+        this.type = type;
+    }
 }
