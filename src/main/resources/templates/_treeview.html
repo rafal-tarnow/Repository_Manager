@@ -1,8 +1,5 @@
-<div th:fragment="treeview (node,repo)" th:unless="${#lists.isEmpty(node.getChildren())}">
-    <ul>
-        <li th:each="child : ${node.getChildren()}" th:inline="text" href="">[[${child.name}]]
-            <div th:replace="_treeview :: treeview(${child},${repo})"></div>
-        </li>
-    </ul>
-</div>
-
+<ul th:fragment="treeview (node,repo)" th:unless="${#lists.isEmpty(node.getChildren())}">
+    <li th:each="child : ${node.getChildren()}" th:inline="text" href="">[[${child.name}]]
+        <div th:replace="_treeview :: treeview(${child},${repo})"></div>
+    </li>
+</ul>

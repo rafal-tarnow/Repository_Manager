@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head th:include="_links :: links">
+<head th:include="_links :: linksTree" >
 
     <meta charset="UTF-8">
     <title>ZMT Manager</title>
@@ -41,11 +41,18 @@
                 <div class="col-md-4 text-left" >
                     <label th:if="${#lists.isEmpty(node.children)}" class="control-label text-right">Brak plików w repozytorium</label>
                     <div th:unless="${#lists.isEmpty(node.children)}" style="margin-top: 50px;">
-                        <div th:replace="_treeview :: treeview(${node}, ${repo})" />
+                        <input type="text" class="form-control" placeholder="Wyszukaj .." id="search"/>
+                        <div id="jstree">
+                            <ul th:replace="_treeview :: treeview(${node}, ${repo})"></ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </body>
+
+<script th:replace="_links :: scripts"></script>
+<script type="text/javascript" src="/js/showTree.js"></script>
+
 </html>
