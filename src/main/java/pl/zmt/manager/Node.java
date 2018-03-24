@@ -1,4 +1,4 @@
-package pl.zmt.menager;
+package pl.zmt.manager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package pl.zmt.menager.services;
+package pl.zmt.manager.services;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -13,9 +13,9 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.zmt.menager.Node;
-import pl.zmt.menager.entity.Repo;
-import pl.zmt.menager.repository.RepoRepository;
+import pl.zmt.manager.Node;
+import pl.zmt.manager.entity.Repo;
+import pl.zmt.manager.repository.RepoRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static pl.zmt.menager.NodeType.*;
+import static pl.zmt.manager.NodeType.*;
 
 @Service
 public class RepoService {

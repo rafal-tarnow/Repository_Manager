@@ -1,4 +1,4 @@
-package pl.zmt.menager.controllers;
+package pl.zmt.manager.controllers;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

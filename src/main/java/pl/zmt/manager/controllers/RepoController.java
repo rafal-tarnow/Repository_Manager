@@ -1,10 +1,10 @@
-package pl.zmt.menager.controllers;
+package pl.zmt.manager.controllers;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import pl.zmt.menager.services.RepoService;
+import pl.zmt.manager.services.RepoService;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller

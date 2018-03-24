@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>pl.zmt</groupId>
-	<artifactId>menager</artifactId>
+	<artifactId>manager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>menager</name>
+	<name>manager</name>
 	<description>Application to manage products created in ZMT</description>
 
 	<parent>
