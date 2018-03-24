@@ -6,6 +6,7 @@ import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static pl.zmt.menager.NodeType.*;
 
@@ -98,6 +100,28 @@ public class RepoService {
         }
     }
 
+    public ArrayList<String> returnTagsList(String index){
+        String path = "/srv/repos/git/" + index;
+
+        FileRepositoryBuilder builder = new FileRepositoryBuilder();
+
+        try {
+            Repository repo = builder.setGitDir(new File(path)).setMustExist(true).build();
+
+            Map<String, Ref> tagMap = repo.getTags();
+            ArrayList<String> tags = new ArrayList<>();
+            tagMap.forEach((key, value) -> {
+                tags.add(key);
+            });
+            return tags;
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<String>();
+    }
+
+
+
     public Node returnTreeNode(String index){
         String path = "/srv/repos/git/" + index;
 
@@ -112,6 +136,7 @@ public class RepoService {
             AnyObjectId anyObjectId = head.getObjectId();
             if(anyObjectId == null)
                 return rootNode;
+
             RevCommit commit = walk.parseCommit(anyObjectId);
             RevTree tree = commit.getTree();
             System.out.println("Having tree: " + tree);
@@ -145,5 +170,9 @@ public class RepoService {
             e.printStackTrace();
         }
         return rootNode;
+    }
+
+    public void getAllTags(String index){
+
     }
 }

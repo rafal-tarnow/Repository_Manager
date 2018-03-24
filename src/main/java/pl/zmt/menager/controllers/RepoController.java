@@ -36,6 +36,7 @@ public class RepoController {
     public String repoDetailsIndex(@PathVariable String index, HttpServletRequest request) {
         request.setAttribute("repo", repoService.findByIndex(index));
         request.setAttribute("node",repoService.returnTreeNode(index));
+        request.setAttribute("tags",repoService.returnTagsList(index));
         return "repodetails";
     }
 

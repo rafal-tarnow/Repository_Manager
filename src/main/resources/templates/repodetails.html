@@ -37,6 +37,21 @@
         </form>
         <form class = "form-horizontal">
             <div class="form-group">
+                <label class="control-label col-md-3">Tagi</label>
+                <div class="col-md-4 text-left" th:if="${#lists.isEmpty(tags)}" >
+                    <label class="control-label">Brak tagów w repozytorium</label>
+                </div>
+                <div th:unless="${#lists.isEmpty(tags)}" class="col-md-4">
+                    <table  class="table table-hover table-striped table-bordered text-center">
+                        <tbody>
+                        <tr th:each="tag: ${tags}">
+                            <td th:text="${tag}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="control-label text-left col-md-3">Pliki:</label>
                 <div class="col-md-4 text-left" >
                     <label th:if="${#lists.isEmpty(node.children)}" class="control-label text-right">Brak plików w repozytorium</label>
