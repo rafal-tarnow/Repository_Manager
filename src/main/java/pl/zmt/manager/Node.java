@@ -7,6 +7,7 @@ import java.util.List;
 public class Node {
 
     private String name = null;
+    private String path = null;
     private List<Node> children = new ArrayList<>();
     private Node parent = null;
     private Integer depth = null;
@@ -14,6 +15,11 @@ public class Node {
 
     public Node(String name) {
         this.name = name;
+    }
+
+    public Node(String name, String path) {
+        this.name = name;
+        this.path = path;
     }
 
     public Node addChild(Node child) {
@@ -44,6 +50,14 @@ public class Node {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     private void setParent(Node parent) {

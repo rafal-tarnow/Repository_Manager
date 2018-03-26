@@ -46,4 +46,10 @@ public class RepoController {
         request.setAttribute("repo", repoService.findByIndex(index));
         return "redirect:/repo/{index}";
     }
+
+    @RequestMapping(value = "/{index}/{fileName}", method = RequestMethod.GET)
+    public String showFile(@PathVariable String index, @PathVariable String fileName, @RequestParam("path") String path, HttpServletRequest request){
+        request.setAttribute("content", repoService.returnContentFile(index, fileName, path));
+        return "contentFile";
+    }
 }

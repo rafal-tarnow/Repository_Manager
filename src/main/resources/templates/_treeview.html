@@ -8,9 +8,15 @@
             </span>
             <span th:case="'FILE'">
                <img th:src="@{/images/File-icon.png}" />
-               <span class="file">[[${child.getName()}]]<span>
+                <a th:onclick="'changeURL(\'' + ${child.getName()}  +'\',\''+ ${child.getPath()} + '\')'" ><span class="file">[[${child.getName()}]]</span></a>
             </span>
         </th:block>
         <div th:replace="_treeview :: treeview(${child},${repo})"></div>
     </li>
+    <script type="text/javascript" th:inline="javascript">
+        function changeURL(name, path){
+            window.open( 'http://localhost:8080/repo/' + [[${repo.indexRepo}]] + '/' + name + '/?path=' + path , '_blank');
+        }
+    </script>
 </ul>
+

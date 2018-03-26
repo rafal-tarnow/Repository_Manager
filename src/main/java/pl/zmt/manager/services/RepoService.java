@@ -2,28 +2,30 @@ package pl.zmt.manager.services;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.zmt.manager.Node;
 import pl.zmt.manager.entity.Repo;
 import pl.zmt.manager.repository.RepoRepository;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.out;
 import static pl.zmt.manager.NodeType.*;
 
 @Service
@@ -86,16 +88,16 @@ public class RepoService {
         File file =  new File("/srv/repos/git/" + index);
         if (!file.exists()) {
             if (file.mkdir()) {
-                System.out.println("Directory is created!");
+                out.println("Directory is created!");
                 Git git = Git.init().setDirectory(file).setBare( true ).call();
                 if(git.getRepository().isBare()){
-                    System.out.println("Repository is initialized!");
+                    out.println("Repository is initialized!");
                     save(index,name,description);
                 }else {
-                    System.out.println("Failed to initialized repository!");
+                    out.println("Failed to initialized repository!");
                 }
             } else {
-                System.out.println("Failed to create directory!");
+                out.println("Failed to create directory!");
             }
         }
     }
@@ -120,8 +122,6 @@ public class RepoService {
         return new ArrayList<String>();
     }
 
-
-
     public Node returnTreeNode(String index){
         String path = "/srv/repos/git/" + index;
 
@@ -139,7 +139,7 @@ public class RepoService {
 
             RevCommit commit = walk.parseCommit(anyObjectId);
             RevTree tree = commit.getTree();
-            System.out.println("Having tree: " + tree);
+            out.println("Having tree: " + tree);
             TreeWalk treeWalk;
             treeWalk = new TreeWalk(repo);
             treeWalk.addTree(tree);
@@ -154,7 +154,7 @@ public class RepoService {
                 while (treeWalk.getDepth() <= parent.getDepth())
                     parent = parent.getParent();
 
-                Node child = parent.addChild(new Node(treeWalk.getNameString()));
+                Node child = parent.addChild(new Node(treeWalk.getNameString(), treeWalk.getPathString()));
                 child.setDepth(treeWalk.getDepth());
                 if(treeWalk.isSubtree()) {
                     child.setType(DIRECTORY);
@@ -172,7 +172,47 @@ public class RepoService {
         return rootNode;
     }
 
-    public void getAllTags(String index){
+    public String returnContentFile(String index, String fileName, String path) {
 
+        String folder = "/srv/repos/git/" + index;
+
+        FileRepositoryBuilder builder = new FileRepositoryBuilder();
+        String content = "";
+
+        try {
+            Repository repo = builder.setGitDir(new File(folder)).setMustExist(true).build();
+            Ref head = repo.getRef("HEAD");
+            RevWalk walk = new RevWalk(repo);
+
+            AnyObjectId anyObjectId = head.getObjectId();
+            if (anyObjectId == null)
+                return content;
+
+            RevCommit commit = walk.parseCommit(anyObjectId);
+            RevTree tree = commit.getTree();
+            System.out.println("Having tree: " + tree);
+
+            TreeWalk treeWalk = new TreeWalk(repo);
+            treeWalk.addTree(tree);
+            treeWalk.setRecursive(true);
+
+            treeWalk.setFilter(PathFilter.create(path+'/'+fileName));
+            if (!treeWalk.next()) {
+                System.out.println("Did not find expected file:" + fileName);
+                return content;
+            }
+
+            ObjectId objectId = treeWalk.getObjectId(0);
+            ObjectLoader loader = repo.open(objectId);
+
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            loader.copyTo(os);
+            content = new String(os.toByteArray(),"UTF-8");
+            return content;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content;
     }
 }
