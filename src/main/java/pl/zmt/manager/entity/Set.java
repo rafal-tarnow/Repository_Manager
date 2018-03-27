@@ -20,8 +20,7 @@ public class Set {
     public Set() {
     }
 
-    public Set(int id, String name, String description) {
-        this.id = id;
+    public Set(String name, String description) {
         this.name = name;
         this.description = description;
     }

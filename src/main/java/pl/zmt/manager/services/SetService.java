@@ -16,4 +16,12 @@ public class SetService {
     public Collection<Set> findAll() {
         return setRepository.findAll();
     }
+
+    public boolean createRepository(String name, String description) {
+        if(setRepository.findByName(name).isEmpty()){
+            setRepository.save(new Set(name,description));
+            return true;
+        }else
+            return false;
+    }
 }
