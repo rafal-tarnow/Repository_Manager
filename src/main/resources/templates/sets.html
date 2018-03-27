@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head th:include="_links :: links">
+
+    <meta charset="UTF-8">
+    <title>ZMT Manager</title>
+
+</head>
+<body>
+
+    <nav id="nav" th:include="_navigation :: navigation-menu" />
+
+    <div class="container text-center" id = "taskDiv">
+        <h3>Lista Zespołów</h3>
+
+        <div class="table-responsive">
+            <table  class="table table-hover table-striped table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Nr</th>
+                        <th>Nazwa</th>
+                        <th>Opis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="set: ${sets}">
+                        <td th:text="${set.getId()}"></td>
+                        <td th:text="${set.getName()}"></td>
+                        <td th:text="${set.getDescription()}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
