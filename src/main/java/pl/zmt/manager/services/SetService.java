@@ -17,11 +17,19 @@ public class SetService {
         return setRepository.findAll();
     }
 
+    public Set findByName(String name) { return setRepository.findByName(name); }
+
     public boolean createRepository(String name, String description) {
-        if(setRepository.findByName(name).isEmpty()){
+        if(setRepository.findByName(name) == null){
             setRepository.save(new Set(name,description));
             return true;
         }else
             return false;
+    }
+
+    public void updateRepo(String name, String description) {
+        Set set = setRepository.findByName(name);
+        set.setDescription(description);
+        setRepository.save(set);
     }
 }

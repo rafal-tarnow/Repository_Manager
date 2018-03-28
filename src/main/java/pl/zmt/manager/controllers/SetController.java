@@ -1,8 +1,8 @@
 package pl.zmt.manager.controllers;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,4 +37,18 @@ public class SetController {
             return "newset";
         }
     }
+
+    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+    public String repoDetailsIndex(@PathVariable String name, HttpServletRequest request) {
+        request.setAttribute("set",setService.findByName(name));
+        return "setdetails";
+    }
+
+    @RequestMapping(value = "/{name}", method = RequestMethod.PUT)
+    public String updateRepo(@PathVariable String name, @RequestParam("description") String description, HttpServletRequest request){
+        setService.updateRepo(name,description);
+        request.setAttribute("set", setService.findByName(name));
+        return "redirect:/set/{name}";
+    }
+
 }

@@ -20,6 +20,7 @@
                         <th>Nr</th>
                         <th>Nazwa</th>
                         <th>Opis</th>
+                        <th>Edycja</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +28,9 @@
                         <td th:text="${set.getId()}"></td>
                         <td th:text="${set.getName()}"></td>
                         <td th:text="${set.getDescription()}"></td>
+                        <td>
+                            <a th:href="@{/set/} + ${set.getName()}" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
