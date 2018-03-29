@@ -23,6 +23,33 @@
         </div>
     </form>
 
+    <br>
+    <div class="container text-center" id = "taskDiv">
+        <h3>Lista Repozytoriów</h3>
+
+        <div class="table-responsive">
+            <table  class="table table-hover table-striped table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Nazwa</th>
+                        <th>Usuń</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="repo: ${repositories}">
+                        <td>[[${repo.getIndexRepo()}]]</td>
+                        <td>[[${repo.getName()}]]</td>
+                        <td>
+                            <form th:action="@{/set/} + ${set.getName()} + @{?id_repo=} + ${repo.getId()} + @{&id_set=} + ${set.getId()}" th:method="DELETE">
+                                <button type="submit" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" ><span class="glyphicon glyphicon-trash"></span></button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 
