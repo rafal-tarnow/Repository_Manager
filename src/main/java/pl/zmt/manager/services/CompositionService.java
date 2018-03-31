@@ -25,8 +25,7 @@ public class CompositionService {
 
         List<Repo> repos = new ArrayList<Repo>();
 
-        for (Composition c : compositions
-             ) {System.out.println(c.getSet() + " : " + c.getRepository() );
+        for (Composition c : compositions) {
             Optional<Repo> optional = repoService.findById(c.getRepository());
             optional.ifPresent(repos::add);
         }
@@ -36,5 +35,16 @@ public class CompositionService {
     public void delete(Integer id_set, Long id_repo) {
         Composition c = compositionRepository.findBySetAndRepository(id_set,id_repo);
         compositionRepository.delete(c);
+    }
+
+    public Collection<Repo> findAllUnusedRepo(List<Repo> used_repo) {
+        Collection<Repo> all_repos = repoService.findAll();
+        Collection<Repo> used_repos = used_repo;
+        all_repos.removeAll(used_repos);
+        return all_repos;
+    }
+
+    public void add(Integer id_set, Long id_repo) {
+        compositionRepository.save(new Composition(id_set, id_repo));
     }
 }

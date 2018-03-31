@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.zmt.manager.entity.Repo;
 import pl.zmt.manager.services.CompositionService;
 import pl.zmt.manager.services.SetService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/set")
@@ -44,7 +46,9 @@ public class SetController {
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public String repoDetailsIndex(@PathVariable String name, HttpServletRequest request) {
         request.setAttribute("set",setService.findByName(name));
-        request.setAttribute("repositories", compositionService.findAllBySetName(name));
+        List<Repo> repositories =  compositionService.findAllBySetName(name);
+        request.setAttribute("repositories",repositories);
+        request.setAttribute("all_repos", compositionService.findAllUnusedRepo(repositories));
         return "setdetails";
     }
 
@@ -57,6 +61,12 @@ public class SetController {
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
     public String deleteRepo(@PathVariable String name, @RequestParam("id_repo") Long id_repo, @RequestParam("id_set") Integer id_set){
         compositionService.delete(id_set,id_repo);
+        return "redirect:/set/{name}";
+    }
+
+    @RequestMapping(value = "/{name}/{id_set}", method = RequestMethod.POST)
+    public String addRepoToSet(@PathVariable String name, @PathVariable Integer id_set, @RequestParam("id_repo") Long id_repo){
+        compositionService.add(id_set, id_repo);
         return "redirect:/set/{name}";
     }
 

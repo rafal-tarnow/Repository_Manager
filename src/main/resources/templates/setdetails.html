@@ -50,6 +50,21 @@
             </table>
         </div>
     </div>
+
+    <br>
+    <div class="col-md-6 text-left" >
+        <h4>Dodaj Repozytorium do Zespołu</h4>
+        <form th:action="@{/set/} + ${set.getName()} + @{/} + ${set.getId()}" th:method="POST">
+            <select name="id_repo">
+                <option th:each = "option : ${all_repos}"
+                        th:text = "${option.getName()}"
+                        th:value = "${option.getId()}">
+                </option>
+            </select>
+            <br><br>
+            <input type="submit" class="bt btn btn-primary" value="Dodaj"/>
+        </form>
+    </div>
 </div>
 </body>
 
