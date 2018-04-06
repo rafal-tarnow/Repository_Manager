@@ -1,4 +1,4 @@
-package pl.zmt.manager;
+package pl.zmt.manager.trees;
 
 import java.util.ArrayList;
 import java.util.List;

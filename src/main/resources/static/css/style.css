@@ -5,3 +5,10 @@
 .file {
     color: #0066bb;
 }
+
+.main-center{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+

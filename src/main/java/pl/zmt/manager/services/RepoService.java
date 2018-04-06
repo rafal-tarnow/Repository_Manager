@@ -11,7 +11,7 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.zmt.manager.Node;
+import pl.zmt.manager.trees.Node;
 import pl.zmt.manager.entity.Repo;
 import pl.zmt.manager.repository.RepoRepository;
 
@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static java.lang.System.out;
-import static pl.zmt.manager.NodeType.*;
+import static pl.zmt.manager.trees.NodeType.*;
 
 @Service
 public class RepoService {
@@ -153,7 +153,7 @@ public class RepoService {
                 child.setDepth(treeWalk.getDepth());
                 if(treeWalk.isSubtree()) {
                     child.setType(DIRECTORY);
-                    treeWalk.enterSubtree();
+                     treeWalk.enterSubtree();
                     parent = child;
                 }else {
                     child.setType(FILE);

@@ -20,3 +20,25 @@
     </script>
 </ul>
 
+<ul th:fragment="structure (node)" th:unless="${#lists.isEmpty(node.getChildren())}">
+    <li th:each="child : ${node.getChildren()}">
+        <th:block th:switch="${child.getType().toString()}">
+            <span th:case="'SET'">
+                <img th:src="@{/images/collection.png}" />
+                [[${child.getName()}]]  ( [[${child.getDescription()}]] )
+                <a th:href="@{/set/} + ${child.getName()}" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
+            </span>
+            </span>
+            <span th:case="'REPOSITORY'">
+               <img th:src="@{/images/folder-server.png}" />
+                <a th:onclick="'goToRepo(\'' + ${child.getName()} + '\')'" ><span>[[${child.getName()}]]  ( [[${child.getDescription()}]] )</span></a>
+            </span>
+        </th:block>
+        <div th:replace="_treeview :: structure(${child})"></div>
+    </li>
+    <script type="text/javascript" th:inline="javascript">
+        function goToRepo(name){
+            window.open( 'http://localhost:8080/repo/' + name , '_blank');
+        }
+    </script>
+</ul>

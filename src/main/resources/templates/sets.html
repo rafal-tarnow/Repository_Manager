@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head th:include="_links :: links">
+<head th:include="_links :: linksTree">
 
     <meta charset="UTF-8">
     <title>ZMT Manager</title>
@@ -13,29 +13,21 @@
     <div class="container text-center" id = "taskDiv">
         <h3>Lista Zespołów</h3>
 
-        <div class="table-responsive">
-            <table  class="table table-hover table-striped table-bordered text-center">
-                <thead>
-                    <tr>
-                        <th>Nr</th>
-                        <th>Nazwa</th>
-                        <th>Opis</th>
-                        <th>Edycja</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="set: ${sets}">
-                        <td th:text="${set.getId()}"></td>
-                        <td th:text="${set.getName()}"></td>
-                        <td th:text="${set.getDescription()}"></td>
-                        <td>
-                            <a th:href="@{/set/} + ${set.getName()}" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <br>
+        <div class="form-group">
+            <div class="col-md-4 text-left main-center" >
+                <label th:if="${#lists.isEmpty(treeSet.getChildren())}" class="control-label text-right">Nie stworzono jeszcze żadnego Zespołu</label>
+                <div th:unless="${#lists.isEmpty(treeSet.getChildren())}" >
+                    <input type="text" class="form-control" placeholder="Wyszukaj .." id="search"/>
+                    <div class="jstree">
+                        <ul th:replace="_treeview :: structure(${treeSet})"></ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
 </body>
+<script th:replace="_links :: scripts"></script>
+<script type="text/javascript" src="/js/showTree.js"></script>
 </html>

@@ -6,11 +6,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.zmt.manager.trees.Node;
 import pl.zmt.manager.entity.Repo;
+import pl.zmt.manager.entity.Set;
 import pl.zmt.manager.services.CompositionService;
 import pl.zmt.manager.services.SetService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -24,7 +27,9 @@ public class SetController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public String getAllSets(HttpServletRequest request){
-        request.setAttribute("sets", setService.findAll());
+        Collection<Set> sets = setService.findAll();
+        request.setAttribute("sets", sets);
+        request.setAttribute("treeSet", compositionService.returnTree(sets));
         return "sets";
     }
 

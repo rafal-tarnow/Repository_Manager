@@ -6,6 +6,8 @@ import pl.zmt.manager.entity.Composition;
 import pl.zmt.manager.entity.Repo;
 import pl.zmt.manager.entity.Set;
 import pl.zmt.manager.repository.CompositionRepository;
+import pl.zmt.manager.trees.Tree;
+import pl.zmt.manager.trees.TreeType;
 
 import java.util.*;
 
@@ -47,4 +49,22 @@ public class CompositionService {
     public void add(Integer id_set, Long id_repo) {
         compositionRepository.save(new Composition(id_set, id_repo));
     }
+
+    public Tree returnTree(Collection<Set> sets) {
+        Tree rootTree = new Tree("Sets");
+        Tree parent = rootTree;
+        for( Set s: sets) {
+            Tree child = parent.addChild(new Tree(s.getName(), s.getDescription(), TreeType.SET));
+            List<Repo> repos = findAllBySetName(s.getName());
+            if(!repos.isEmpty()) {
+                parent = child;
+                for (Repo r : repos) {
+                    Tree child1 = parent.addChild(new Tree(r.getIndexRepo(), r.getName(), TreeType.REPOSITORY));
+                }
+                parent = parent.getParent();
+            }
+        }
+        return rootTree;
+    }
+
 }

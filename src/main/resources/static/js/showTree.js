@@ -1,6 +1,6 @@
 $(function () {
 
-    $('#jstree').jstree({
+    $('.jstree').jstree({
         "core" : {
             "themes" : { "stripes" : true }
         },
@@ -15,11 +15,11 @@ $(function () {
             "wholerow"
         ]
     });
-    $('#jstree').on("changed.jstree", function (e, data) {
+    $('.jstree').on("changed.jstree", function (e, data) {
         console.log(data.selected);
     });
 
     $('#search').keyup(function(){
-        $('#jstree').jstree('search', $(this).val());
+        $('.jstree').jstree('search', $(this).val());
     });
 });

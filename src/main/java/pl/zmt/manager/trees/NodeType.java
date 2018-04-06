@@ -1,3 +1,3 @@
-package pl.zmt.manager;
+package pl.zmt.manager.trees;
 
 public enum NodeType {FILE, DIRECTORY, UNKNOWN;}
