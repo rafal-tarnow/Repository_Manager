@@ -26,7 +26,7 @@
             <span th:case="'SET'">
                 <img th:src="@{/images/collection.png}" />
                 [[${child.getName()}]]  ( [[${child.getDescription()}]] )
-                <a th:href="@{/set/} + ${child.getName()}" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
+               <a th:onclick="'edit(\'' + ${child.getName()} + '\')'" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
             </span>
             </span>
             <span th:case="'REPOSITORY'">
@@ -39,6 +39,9 @@
     <script type="text/javascript" th:inline="javascript">
         function goToRepo(name){
             window.open( 'http://localhost:8080/repo/' + name , '_blank');
+        }
+        function edit(name){
+            window.location.href ="http://localhost:8080/set/" + name;
         }
     </script>
 </ul>

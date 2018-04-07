@@ -57,7 +57,7 @@
         <form th:action="@{/set/} + ${set.getName()} + @{/} + ${set.getId()}" th:method="POST">
             <select name="id_repo">
                 <option th:each = "option : ${all_repos}"
-                        th:text = "${option.getName()}"
+                        th:text = "${option.getIndexRepo() + ' (' + option.getName() + ' )'}"
                         th:value = "${option.getId()}">
                 </option>
             </select>
