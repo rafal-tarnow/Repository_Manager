@@ -37,19 +37,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="repo: ${repositories}">
-                        <td>[[${repo.getIndexRepo()}]]</td>
+                <th:block th:each="repo: ${repositories}">
+                    <tr>
+                        <td><a th:href="@{/repo/} + ${repo.indexRepo}"><span th:text="${repo.getIndexRepo()}"></span></a></td>
                         <td>[[${repo.getName()}]]</td>
                         <td>
-                            <form th:action="@{/set/} + ${set.getName()} + @{?id_repo=} + ${repo.getId()} + @{&id_set=} + ${set.getId()}" th:method="DELETE">
-                                <button type="submit" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" ><span class="glyphicon glyphicon-trash"></span></button>
-                            </form>
+                            <a th:href="@{#myModal_} + ${repo.getId()}" role="button" class="btn btn-large btn-primary" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
+
+                    <div th:id="myModal_ + ${repo.getId()}" class="modal fade">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Potwierdź Usuwanie</h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <p>Czy na pewno chesz usunąć Repozytorium "[[${repo.getIndexRepo()}]]" z Zespołu? </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form th:action="@{/set/} + ${set.getName()} + @{?id_repo=} + ${repo.getId()} + @{&id_set=} + ${set.getId()}" th:method="DELETE">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                                        <button type="submit" class="btn btn-primary" data-title="Edit" data-toggle="modal" >Usuń</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
                 </tbody>
             </table>
         </div>
     </div>
+
 
     <br>
     <div class="col-md-6 text-left" >
@@ -67,7 +89,6 @@
     </div>
 </div>
 </body>
-
 <script th:replace="_links :: scripts"></script>
 
 </html>
