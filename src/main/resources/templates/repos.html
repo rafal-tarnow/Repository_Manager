@@ -17,7 +17,6 @@
             <table  class="table table-hover table-striped table-bordered text-center">
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Index</th>
                         <th>Nazwa</th>
                         <th>Opis</th>
@@ -26,7 +25,6 @@
                 </thead>
                 <tbody>
                     <tr th:each="repo: ${repos}">
-                        <td th:text="${repo.id}"></td>
                         <td><a th:href="@{/repo/} + ${repo.indexRepo}"><span th:text="${repo.indexRepo}"></span></a></td>
                         <td th:text="${repo.name}"></td>
                         <td th:text="${repo.description}"></td>

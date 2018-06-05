@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "repozytoria", catalog = "zmt")
+@Table(name = "repozytoria", catalog = "zmt_data")
 public class Repo {
 
     @Id

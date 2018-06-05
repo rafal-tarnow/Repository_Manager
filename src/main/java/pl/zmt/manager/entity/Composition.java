@@ -3,7 +3,7 @@ package pl.zmt.manager.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "compositions", catalog = "zmt")
+@Table(name = "compositions", catalog = "zmt_data")
 public class Composition {
 
     @Id

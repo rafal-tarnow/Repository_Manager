@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "sets", catalog = "zmt")
+@Table(name = "sets", catalog = "zmt_data")
 public class Set {
 
     @Id
