@@ -12,8 +12,8 @@ import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.zmt.manager.trees.Node;
-import pl.zmt.manager.entity.Repo;
-import pl.zmt.manager.repository.RepoRepository;
+import pl.zmt.manager.entities.Repo;
+import pl.zmt.manager.repositories.RepoRepository;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

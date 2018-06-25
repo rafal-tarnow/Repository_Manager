@@ -2,10 +2,10 @@ package pl.zmt.manager.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.zmt.manager.entity.Composition;
-import pl.zmt.manager.entity.Repo;
-import pl.zmt.manager.entity.Set;
-import pl.zmt.manager.repository.CompositionRepository;
+import pl.zmt.manager.entities.Composition;
+import pl.zmt.manager.entities.Repo;
+import pl.zmt.manager.entities.Set;
+import pl.zmt.manager.repositories.CompositionRepository;
 import pl.zmt.manager.trees.Tree;
 import pl.zmt.manager.trees.TreeType;
 

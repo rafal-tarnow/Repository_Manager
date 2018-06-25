@@ -11,13 +11,13 @@
     <nav id="nav" th:include="_navigation :: navigation-menu" />
 
     <div class="container text-center">
-        <h3>Szczegóły</h3>
+        <h3>   <label class="control-label" th:text="${repo.indexRepo}"></label></h3>
         <form class = "form-horizontal">
             <div class="form-group">
-                <label class="control-label col-md-3">Index</label>
-                <div class="col-md-4">
-                    <label class="control-label" th:text="${repo.indexRepo}"></label>
-                </div>
+                <!--<label class="control-label col-md-3">Index</label>-->
+                <!--<div class="col-md-4">-->
+                    <!--<label class="control-label" th:text="${repo.indexRepo}"></label>-->
+                <!--</div>-->
             </div>
             <div class="form-group">
                 <label class="control-label col-md-3">Nazwa</label>

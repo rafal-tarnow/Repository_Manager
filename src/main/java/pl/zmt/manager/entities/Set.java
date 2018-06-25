@@ -1,4 +1,4 @@
-package pl.zmt.manager.entity;
+package pl.zmt.manager.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.zmt.manager.trees.Node;
-import pl.zmt.manager.entity.Repo;
-import pl.zmt.manager.entity.Set;
+import pl.zmt.manager.entities.Repo;
+import pl.zmt.manager.entities.Set;
 import pl.zmt.manager.services.CompositionService;
 import pl.zmt.manager.services.SetService;
 

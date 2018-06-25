@@ -2,8 +2,8 @@ package pl.zmt.manager.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.zmt.manager.entity.Set;
-import pl.zmt.manager.repository.SetRepository;
+import pl.zmt.manager.entities.Set;
+import pl.zmt.manager.repositories.SetRepository;
 
 import java.util.Collection;
 
