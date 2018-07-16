@@ -20,13 +20,16 @@
     </script>
 </ul>
 
-<ul th:fragment="structure (node)" th:unless="${#lists.isEmpty(node.getChildren())}">
+<ul th:fragment="structure (node)" th:unless="${#lists.isEmpty(node.getChildren())}"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
     <li th:each="child : ${node.getChildren()}">
         <th:block th:switch="${child.getType().toString()}">
             <span th:case="'SET'">
                 <img th:src="@{/images/collection.png}" />
                 [[${child.getName()}]]  ( [[${child.getDescription()}]] )
-               <a th:onclick="'edit(\'' + ${child.getName()} + '\')'" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
+               <a sec:authorize="hasAuthority('ADMIN')" th:onclick="'edit(\'' + ${child.getName()} + '\')'" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"><span class="glyphicon glyphicon-pencil"></span></a>
             </span>
             </span>
             <span th:case="'REPOSITORY'">
@@ -39,7 +42,7 @@
     <script type="text/javascript" th:inline="javascript">
         function goToRepo(name){
             window.open( 'http://localhost:8080/repo/' + name , '_blank');
-        }
+        }dostępu
         function edit(name){
             window.location.href ="http://localhost:8080/set/" + name;
         }

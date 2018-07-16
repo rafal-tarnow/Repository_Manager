@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:include="_links :: links">
 
     <meta charset="UTF-8">
@@ -13,6 +13,7 @@
     <div class="container text-center">
         <h3>Nowe Repozytorium</h3>
         <form class = "form-horizontal" method="POST">
+        <form class = "form-horizontal"  th:action="@{/repo/new}" method="POST">
             <div class="form-group">
                 <label class="control-label col-md-3">Index</label>
                 <div class="col-md-3">

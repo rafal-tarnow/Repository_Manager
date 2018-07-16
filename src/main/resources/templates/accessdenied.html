@@ -1,0 +1,24 @@
+<body>
+<style>
+    .accessBox{
+        width:500px;
+        height: 400px;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        margin-top: 150px;
+        margin-left:auto;
+        margin-right: auto;
+        padding-left:30px;
+        padding-right: 30px;
+        padding-bottom: 30px;
+        text-align: center;
+    }
+</style>
+<div class="accessBox">
+<img th:src="@{/images/key.png}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
+<h2> Przepraszamy, ale wygląda na to, że nie masz uprawnień do tej strony</h2>
+
+Kliknij <a th:href="@{/}" >tutaj</a>
+aby wrócić do strony głównej.
+</div>
+</body>
