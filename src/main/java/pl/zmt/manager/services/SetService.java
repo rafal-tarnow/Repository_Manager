@@ -2,10 +2,14 @@ package pl.zmt.manager.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.zmt.manager.entities.Composition;
 import pl.zmt.manager.entities.Set;
 import pl.zmt.manager.repositories.SetRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SetService {
@@ -31,5 +35,9 @@ public class SetService {
         Set set = setRepository.findByName(name);
         set.setDescription(description);
         setRepository.save(set);
+    }
+
+    public java.util.Set<Set> findAllComponents(String name) {
+        return setRepository.findByName(name).getSets();
     }
 }

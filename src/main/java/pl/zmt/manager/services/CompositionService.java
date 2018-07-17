@@ -63,6 +63,14 @@ public class CompositionService {
                 }
                 parent = parent.getParent();
             }
+            java.util.Set<Set> components = setService.findAllComponents(s.getName());
+            if(!components.isEmpty()) {
+                parent = child;
+                for (Set c : components) {
+                    Tree child2 = parent.addChild(new Tree(c.getName(), c.getDescription(), TreeType.SET));
+                }
+                parent = parent.getParent();
+            }
         }
         return rootTree;
     }

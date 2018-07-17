@@ -1,9 +1,6 @@
 package pl.zmt.manager.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "sets", catalog = "zmt_data")
@@ -16,6 +13,10 @@ public class Set {
     private String name;
     @Column(name = "description")
     private String description;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "set_set", joinColumns = @JoinColumn(name = "parent_id"), inverseJoinColumns = @JoinColumn(name = "child_id"))
+    private java.util.Set<Set> sets;
 
     public Set() {
     }
@@ -47,5 +48,13 @@ public class Set {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public java.util.Set<Set> getSets() {
+        return sets;
+    }
+
+    public void setSets(java.util.Set<Set> sets) {
+        this.sets = sets;
     }
 }
