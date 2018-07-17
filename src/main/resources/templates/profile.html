@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:include="_links :: links">
+
+    <meta charset="UTF-8">
+    <title>ZMT Manager</title>
+
+</head>
+<body>
+<style>
+
+    .container {
+        margin: 0;
+        background: #E9E9E9;
+    }
+
+    #Profile {
+        position: absolute;
+        margin: auto;
+        top: 0; right: 0; bottom: 0; left: 0;
+        width: 150px; height: 150px;
+        border-radius: 150px;
+    }#Profile:before {
+         content: '';
+         position: absolute;
+         top: -8px; left: -8px;
+         width: 162px; height: 162px;
+         border-radius: 162px;
+         border: 2px solid #BCBCBC;
+     }
+
+    #Profile:after {
+        content: '';
+        position: absolute;
+        top: -13px; left: -13px;
+        width: 172px; height: 172px;
+        border-radius: 172px;
+        border: 2px solid #FF9900;
+    }
+
+    #Profile img {
+        border-radius: 150px;
+    }
+
+    #Profile span {
+        position: absolute;
+        bottom: -60px;
+        display: block;
+        width: 150px;
+        text-align: center;
+        font-family: 'Oswald';
+        color: #333;
+        font-size: 25px;
+    }
+</style>
+
+    <nav id="nav" th:include="_navigation :: navigation-menu" />
+    <div class="container">
+        <div id="Profile">
+            <img th:src="@{/images/profile.png}" />
+            <span th:text="${user.getName()} + ' ' + ${user.getLastName()}"></span>
+        </div>
+    </div>
+
+</body>
+</html>

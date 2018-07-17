@@ -1,6 +1,8 @@
 package pl.zmt.manager.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,16 +52,27 @@ public class LoginController extends WebMvcConfigurerAdapter {
             modelAndView.addObject("successMessage", "Rejestracja przebiegła pomyślnie");
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("registration");
-
         }
         return modelAndView;
     }
-
 
     @RequestMapping(value = "/accessdenied", method = RequestMethod.GET)
     public ModelAndView access(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("accessdenied");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public ModelAndView showProfile(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User userExists = userService.findUserByEmail(currentPrincipalName);
+        if (userExists != null) {
+            modelAndView.addObject("user", userExists);
+        }
+        modelAndView.setViewName("profile");
         return modelAndView;
     }
 
