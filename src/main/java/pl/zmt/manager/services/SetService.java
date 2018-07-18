@@ -6,10 +6,8 @@ import pl.zmt.manager.entities.Composition;
 import pl.zmt.manager.entities.Set;
 import pl.zmt.manager.repositories.SetRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.*;
 
 @Service
 public class SetService {
@@ -39,5 +37,28 @@ public class SetService {
 
     public java.util.Set<Set> findAllComponents(String name) {
         return setRepository.findByName(name).getSets();
+    }
+
+    public void deleteComponent(Integer id_set, Integer id_component) {
+        Set c = setRepository.findById(id_component).get();
+        Set set = setRepository.findById(id_set).get();
+        set.getSets().remove(c);
+        setRepository.save(set);
+    }
+
+    public void add(Integer id_set, Integer id_component) {
+        Set c = setRepository.findById(id_component).get();
+        Set set = setRepository.findById(id_set).get();
+        set.getSets().add(c);
+        setRepository.save(set);
+    }
+
+    public Object findAllUnusedSet(String name, java.util.Set<Set> usedSet) {
+        Set parrent = setRepository.findByName(name);
+        java.util.Set<Set> allSet = new HashSet<>(setRepository.findAll());
+        allSet.remove(parrent);
+        for(Set x : usedSet)
+            allSet.remove(x);
+        return allSet;
     }
 }

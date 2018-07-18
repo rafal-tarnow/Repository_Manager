@@ -53,6 +53,9 @@ public class SetController {
         List<Repo> repositories =  compositionService.findAllBySetName(name);
         request.setAttribute("repositories",repositories);
         request.setAttribute("all_repos", compositionService.findAllUnusedRepo(repositories));
+        java.util.Set<Set> components =  setService.findAllComponents(name);
+        request.setAttribute("components", components);
+        request.setAttribute("all_components", setService.findAllUnusedSet(name, components));
         return "setdetails";
     }
 
@@ -63,14 +66,27 @@ public class SetController {
     }
 
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
-    public String deleteRepo(@PathVariable String name, @RequestParam("id_repo") Long id_repo, @RequestParam("id_set") Integer id_set){
-        compositionService.delete(id_set,id_repo);
+    public String deleteRepo(@PathVariable String name, @RequestParam("id_child") Long id_child, @RequestParam("id_set") Integer id_set, @RequestParam("type") String type){
+        if (type.equals("REP"))
+        {
+            System.out.println("REP: " + id_child);
+            compositionService.deleteRepo(id_set,id_child);
+        }else {
+            System.out.println("SET: " + id_child);
+            setService.deleteComponent(id_set, (id_child).intValue());
+        }
         return "redirect:/set/{name}";
     }
 
-    @RequestMapping(value = "/{name}/{id_set}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{name}/REP/{id_set}", method = RequestMethod.POST)
     public String addRepoToSet(@PathVariable String name, @PathVariable Integer id_set, @RequestParam("id_repo") Long id_repo){
         compositionService.add(id_set, id_repo);
+        return "redirect:/set/{name}";
+    }
+
+    @RequestMapping(value = "/{name}/SET/{id_set}", method = RequestMethod.POST)
+    public String addRepoToSet(@PathVariable String name, @PathVariable Integer id_set, @RequestParam("id_component") Integer id_component){
+        setService.add(id_set, id_component);
         return "redirect:/set/{name}";
     }
 

@@ -34,7 +34,7 @@ public class CompositionService {
         return repos;
     }
 
-    public void delete(Integer id_set, Long id_repo) {
+    public void deleteRepo(Integer id_set, Long id_repo) {
         Composition c = compositionRepository.findBySetAndRepository(id_set,id_repo);
         compositionRepository.delete(c);
     }
@@ -74,5 +74,6 @@ public class CompositionService {
         }
         return rootTree;
     }
+
 
 }

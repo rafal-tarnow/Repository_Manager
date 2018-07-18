@@ -1,6 +1,7 @@
 package pl.zmt.manager.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "sets", catalog = "zmt_data")
@@ -17,6 +18,9 @@ public class Set {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "set_set", joinColumns = @JoinColumn(name = "parent_id"), inverseJoinColumns = @JoinColumn(name = "child_id"))
     private java.util.Set<Set> sets;
+
+    @ManyToMany(mappedBy="sets")
+    private java.util.Set<Set> parents = new HashSet<Set>();
 
     public Set() {
     }

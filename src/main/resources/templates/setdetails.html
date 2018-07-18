@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:include="_links :: linksTree" >
 
     <meta charset="UTF-8">
@@ -25,18 +25,49 @@
 
     <br>
     <div class="container text-center" id = "taskDiv">
-        <h3>Lista Repozytoriów</h3>
+        <h3>Skład Zespołu</h3>
 
         <div class="table-responsive">
             <table  class="table table-hover table-striped table-bordered text-center">
                 <thead>
                     <tr>
-                        <th>Index</th>
                         <th>Nazwa</th>
+                        <th>Opis</th>
                         <th>Usuń</th>
                     </tr>
                 </thead>
                 <tbody>
+                <th:block th:each="component: ${components}">
+                    <tr>
+                        <td><a th:href="@{/set/} + ${component.name}"><span th:text="${component.getName()}"></span></a></td>
+                        <td>[[${component.getDescription()}]]</td>
+                        <td>
+                            <a th:href="@{#DeleteSetModal_} + ${component.getId()}" role="button" class="btn btn-large btn-primary" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+
+                    <div th:id="DeleteSetModal_ + ${component.getId()}" class="modal fade">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Potwierdź Usuwanie</h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <p>Czy na pewno chesz usunąć Podzespół "[[${component.getName()}]]" z Zespołu? </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form th:action="@{/set/} + ${set.getName()} + @{?type=SET} + @{&id_child=} + ${component.getId()} + @{&id_set=} + ${set.getId()}" th:method="DELETE">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                                        <button type="submit" class="btn btn-primary" data-title="Edit" data-toggle="modal" >Usuń</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+
                 <th:block th:each="repo: ${repositories}">
                     <tr>
                         <td><a th:href="@{/repo/} + ${repo.indexRepo}"><span th:text="${repo.getIndexRepo()}"></span></a></td>
@@ -58,7 +89,7 @@
                                     <p>Czy na pewno chesz usunąć Repozytorium "[[${repo.getIndexRepo()}]]" z Zespołu? </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <form th:action="@{/set/} + ${set.getName()} + @{?id_repo=} + ${repo.getId()} + @{&id_set=} + ${set.getId()}" th:method="DELETE">
+                                    <form th:action="@{/set/} + ${set.getName()} + @{?type=REP} + @{&id_child=} + ${repo.getId()} + @{&id_set=} + ${set.getId()}" th:method="DELETE">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
                                         <button type="submit" class="btn btn-primary" data-title="Edit" data-toggle="modal" >Usuń</button>
                                     </form>
@@ -75,12 +106,26 @@
 
     <br>
     <div class="col-md-6 text-left" >
-        <h4>Dodaj Repozytorium do Zespołu</h4>
-        <form th:action="@{/set/} + ${set.getName()} + @{/} + ${set.getId()}" th:method="POST">
+        <h4>Dodaj Repozytorium</h4>
+        <form th:action="@{/set/} + ${set.getName()} + @{/REP/} + ${set.getId()}" th:method="POST">
             <select name="id_repo">
                 <option th:each = "option : ${all_repos}"
                         th:text = "${option.getIndexRepo() + ' (' + option.getName() + ' )'}"
                         th:value = "${option.getId()}">
+                </option>
+            </select>
+            <br><br>
+            <input type="submit" class="bt btn btn-primary" value="Dodaj"/>
+        </form>
+    </div>
+
+    <div class="col-md-6 text-left" >
+        <h4>Dodaj Podzespół</h4>
+        <form th:action="@{/set/} + ${set.getName()} + @{/SET/} + ${set.getId()}" th:method="POST">
+            <select name="id_component">
+                <option th:each = "component : ${all_components}"
+                        th:text = "${component.getName() + ' (' + component.getDescription() + ' )'}"
+                        th:value = "${component.getId()}">
                 </option>
             </select>
             <br><br>
